@@ -5,6 +5,7 @@
 #include <set>
 #include <map>
 #include <vector>
+
 using namespace std;
 
 int NOD (int a, int b){
