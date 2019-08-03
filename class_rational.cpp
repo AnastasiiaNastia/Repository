@@ -28,8 +28,7 @@ public:
         	num = 0;
         	denom = 1;
         } else {
-        	num = abs(numerator/NOD(numerator, denominator))
-        			*sign(numerator*denominator);
+        	num = abs(numerator/NOD(numerator, denominator)) * sign(numerator*denominator);
         	denom = abs(denominator/NOD(numerator, denominator));
         }
     }
@@ -47,24 +46,22 @@ private:
     int denom;
 };
 
-Rational operator+ (const Rational& r, const Rational& l) {
-	return {r.Numerator() * l.Denominator() + l.Numerator() * r.Denominator(),
-		r.Denominator() * l.Denominator()};
+Rational operator+ (const Rational& l, const Rational& r) {
+	return {l.Numerator() * r.Denominator() + r.Numerator() * l.Denominator(),
+		l.Denominator() * r.Denominator()};
 }
 
-Rational operator- (const Rational& r, const Rational& l) {
-	return {r.Numerator() * l.Denominator() - l.Numerator() * r.Denominator(),
-		r.Denominator() * l.Denominator()};
+Rational operator- (const Rational& l, const Rational& r) {
+	return {l.Numerator() * r.Denominator() - r.Numerator() * l.Denominator(),
+		l.Denominator() * r.Denominator()};
 }
 
-Rational operator* (const Rational& r, const Rational& l) {
-	return {r.Numerator() * l.Numerator(), r.Denominator() * l.Denominator()};
+Rational operator* (const Rational& l, const Rational& r) {
+	return {l.Numerator() * r.Numerator(), l.Denominator() * r.Denominator()};
 }
 
-Rational operator/ (const Rational& r, const Rational& l) {
-	int p = r.Numerator() * l.Denominator();
-	int q = r.Denominator() * l.Numerator();
-	return {p, q};
+Rational operator/ (const Rational& l, const Rational& r) {
+	return {l.Numerator() * r.Denominator(), l.Denominator() * r.Numerator()};
 }
 
 ostream& operator<< (ostream& stream, const Rational& r) {
@@ -79,15 +76,11 @@ istream& operator>> (istream& stream, Rational& r){
 	return stream;
 }
 
-bool operator> (const Rational& r, const Rational& l) {
-	return r.Numerator() * l.Denominator() > l.Numerator() * r.Denominator();
+bool operator< (const Rational& l, const Rational& r) {
+	return l.Numerator() * r.Denominator() < r.Numerator() * l.Denominator();
 }
 
-bool operator< (const Rational& r, const Rational& l) {
-	return r > l;
-}
-
-bool operator== (const Rational& r, const Rational& l) {
+bool operator== (const Rational& l, const Rational& r) {
 	return !((r < l) || (l < r));
 }
 
