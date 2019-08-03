@@ -8,16 +8,12 @@
 
 using namespace std;
 
-int NOD(int a, int b){
-	if (b == 0){
-		return a;
-	} else {
-		return NOD(b, a % b);
-	}
+int NOD(int a, int b) {
+	return b == 0 ? a : NOD(b, a % b);
 }
 
-int sign(const int& a){
-	return (a > 0) ? 1 : -1;
+int sign(int a) {
+	return a > 0 ? 1 : -1;
 }
 
 class Rational {
@@ -51,53 +47,47 @@ private:
     int denom;
 };
 
-/*bool operator== (const Rational& right, const Rational& left){
-	return right.Denominator() == left.Denominator() &&
-			right.Numerator() == left.Numerator();
-}
-*/
-
-Rational operator+ (const Rational& r, const Rational& l){
+Rational operator+ (const Rational& r, const Rational& l) {
 	return {r.Numerator() * l.Denominator() + l.Numerator() * r.Denominator(),
 		r.Denominator() * l.Denominator()};
 }
 
-Rational operator- (const Rational& r, const Rational& l){
+Rational operator- (const Rational& r, const Rational& l) {
 	return {r.Numerator() * l.Denominator() - l.Numerator() * r.Denominator(),
 		r.Denominator() * l.Denominator()};
 }
 
-Rational operator* (const Rational& r, const Rational& l){
+Rational operator* (const Rational& r, const Rational& l) {
 	return {r.Numerator() * l.Numerator(), r.Denominator() * l.Denominator()};
 }
 
-Rational operator/ (const Rational& r, const Rational& l){
+Rational operator/ (const Rational& r, const Rational& l) {
 	int p = r.Numerator() * l.Denominator();
 	int q = r.Denominator() * l.Numerator();
 	return {p, q};
 }
 
-ostream& operator<< (ostream& stream, const Rational& r){
+ostream& operator<< (ostream& stream, const Rational& r) {
 	return stream << r.Numerator() << "/" << r.Denominator();
 }
 
 istream& operator>> (istream& stream, Rational& r){
 	int p, q;
-	if (stream >> p && stream.ignore(1) && stream >> q){
+	if (stream >> p && stream.ignore(1) && stream >> q) {
 		r = {p, q};
 	}
 	return stream;
 }
 
-bool operator> (const Rational& r, const Rational& l){
+bool operator> (const Rational& r, const Rational& l) {
 	return r.Numerator() * l.Denominator() > l.Numerator() * r.Denominator();
 }
 
-bool operator< (const Rational& r, const Rational& l){
+bool operator< (const Rational& r, const Rational& l) {
 	return r > l;
 }
 
-bool operator== (const Rational& r, const Rational& l){
+bool operator== (const Rational& r, const Rational& l) {
 	return !((r < l) || (l < r));
 }
 
