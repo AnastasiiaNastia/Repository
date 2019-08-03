@@ -5,27 +5,19 @@
 #include <set>
 #include <map>
 #include <vector>
+
 using namespace std;
 
-int NOD (int a, int b){
-	a = abs(a);
-	b = abs(b);
-	while (a > 0 && b > 0) {
-		if (a > b) {
-			a = a % b;
-		} else {
-			b = b % a;
-		}
+int NOD(int a, int b){
+	if (b == 0){
+		return a;
+	} else {
+		return NOD(b, a % b);
 	}
-	return a + b;
 }
 
 int sign(const int& a){
-	if (a > 0){
-		return 1;
-	} else {
-		return -1;
-	}
+	return (a > 0) ? 1 : -1;
 }
 
 class Rational {
@@ -59,29 +51,24 @@ private:
     int denom;
 };
 
-bool operator== (const Rational& right, const Rational& left){
-	return (right.Denominator() == left.Denominator() &&
-			right.Numerator() == left.Numerator());
+/*bool operator== (const Rational& right, const Rational& left){
+	return right.Denominator() == left.Denominator() &&
+			right.Numerator() == left.Numerator();
 }
+*/
 
 Rational operator+ (const Rational& r, const Rational& l){
-	int p = r.Numerator() * l.Denominator() +
-		l.Numerator() * r.Denominator();
-	int q = r.Denominator() * l.Denominator();
-	return {p, q};
+	return {r.Numerator() * l.Denominator() + l.Numerator() * r.Denominator(),
+		r.Denominator() * l.Denominator()};
 }
 
 Rational operator- (const Rational& r, const Rational& l){
-	int p = r.Numerator() * l.Denominator() -
-		l.Numerator() * r.Denominator();
-	int q = r.Denominator() * l.Denominator();
-	return {p, q};
+	return {r.Numerator() * l.Denominator() - l.Numerator() * r.Denominator(),
+		r.Denominator() * l.Denominator()};
 }
 
 Rational operator* (const Rational& r, const Rational& l){
-	int p = r.Numerator()*l.Numerator();
-	int q = r.Denominator() * l.Denominator();
-	return {p, q};
+	return {r.Numerator() * l.Numerator(), r.Denominator() * l.Denominator()};
 }
 
 Rational operator/ (const Rational& r, const Rational& l){
@@ -91,8 +78,7 @@ Rational operator/ (const Rational& r, const Rational& l){
 }
 
 ostream& operator<< (ostream& stream, const Rational& r){
-	stream << r.Numerator() << "/" << r.Denominator();
-	return stream;
+	return stream << r.Numerator() << "/" << r.Denominator();
 }
 
 istream& operator>> (istream& stream, Rational& r){
@@ -104,11 +90,17 @@ istream& operator>> (istream& stream, Rational& r){
 }
 
 bool operator> (const Rational& r, const Rational& l){
-	return (r.Numerator() * l.Denominator()
-			> l.Numerator() * r.Denominator());
+	return r.Numerator() * l.Denominator() > l.Numerator() * r.Denominator();
 }
 
 bool operator< (const Rational& r, const Rational& l){
-	return (r.Numerator() * l.Denominator()
-			< l.Numerator() * r.Denominator());
+	return r > l;
+}
+
+bool operator== (const Rational& r, const Rational& l){
+	return !((r < l) || (l < r));
+}
+
+int main(){
+	return 0;
 }
